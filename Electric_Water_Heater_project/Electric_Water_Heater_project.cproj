@@ -274,16 +274,16 @@
     <Compile Include="MCAL\Timer0\Timer0_Configuration.h">
       <SubType>compile</SubType>
     </Compile>
-    <Compile Include="MCAL\Timer1\Timer1.c">
+    <Compile Include="MCAL\Timer1\TIMER1.c">
       <SubType>compile</SubType>
     </Compile>
-    <Compile Include="MCAL\Timer1\Timer1.h">
+    <Compile Include="MCAL\Timer1\TIMER1.h">
       <SubType>compile</SubType>
     </Compile>
-    <Compile Include="MCAL\Timer1\Timer1_Address.h">
+    <Compile Include="MCAL\Timer1\TIMER1_Addresses.h">
       <SubType>compile</SubType>
     </Compile>
-    <Compile Include="MCAL\Timer1\Timer1_Configuration.h">
+    <Compile Include="MCAL\Timer1\TIMER1_Configurations.h">
       <SubType>compile</SubType>
     </Compile>
     <Compile Include="MCAL\TWI\TWI.c">

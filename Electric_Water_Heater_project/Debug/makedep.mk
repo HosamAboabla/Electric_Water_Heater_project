@@ -28,7 +28,7 @@ MCAL\Interrupt\Interrupt.c
 
 MCAL\Timer0\Timer0.c
 
-MCAL\Timer1\Timer1.c
+MCAL\Timer1\TIMER1.c
 
 MCAL\TWI\TWI.c
 
