@@ -20,15 +20,21 @@ HAL\LED1\LED1.c
 
 HAL\LED2\LED2.c
 
+HAL\Relay\Relay.c
+
 MCAL\ADC\ADC.c
 
 MCAL\DIO\DIO.c
+
+MCAL\EEPROM\EEPROM.c
 
 MCAL\Interrupt\Interrupt.c
 
 MCAL\Timer0\Timer0.c
 
 MCAL\Timer1\TIMER1.c
+
+MCAL\Timer2\Timer2.c
 
 MCAL\TWI\TWI.c
 

@@ -117,6 +117,9 @@
       <Value>../APP/CONFIGURATION</Value>
       <Value>../APP/Main</Value>
       <Value>../MCAL/Timer1</Value>
+      <Value>../HAL/Relay</Value>
+      <Value>../MCAL/EEPROM</Value>
+      <Value>../MCAL/Timer2</Value>
     </ListValues>
   </avrgcc.compiler.directories.IncludePaths>
   <avrgcc.compiler.optimization.level>Optimize debugging experience (-Og)</avrgcc.compiler.optimization.level>
@@ -226,6 +229,15 @@
     <Compile Include="HAL\LED2\LED2_Configurations.h">
       <SubType>compile</SubType>
     </Compile>
+    <Compile Include="HAL\Relay\Relay.c">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="HAL\Relay\Relay.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="HAL\Relay\Relay_Configuration.h">
+      <SubType>compile</SubType>
+    </Compile>
     <Compile Include="MCAL\ADC\ADC.c">
       <SubType>compile</SubType>
     </Compile>
@@ -248,6 +260,18 @@
       <SubType>compile</SubType>
     </Compile>
     <Compile Include="MCAL\DIO\DIO_Configurations.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="MCAL\EEPROM\EEPROM.c">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="MCAL\EEPROM\EEPROM.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="MCAL\EEPROM\EEPROM_Configurations.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="MCAL\EEPROM\EERPROM_Addresses.h">
       <SubType>compile</SubType>
     </Compile>
     <Compile Include="MCAL\Interrupt\Interrupt.c">
@@ -286,6 +310,18 @@
     <Compile Include="MCAL\Timer1\TIMER1_Configurations.h">
       <SubType>compile</SubType>
     </Compile>
+    <Compile Include="MCAL\Timer2\Timer2.c">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="MCAL\Timer2\Timer2.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="MCAL\Timer2\Timer2_Address.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="MCAL\Timer2\Timer2_Configuration.h">
+      <SubType>compile</SubType>
+    </Compile>
     <Compile Include="MCAL\TWI\TWI.c">
       <SubType>compile</SubType>
     </Compile>
@@ -312,10 +348,13 @@
     <Folder Include="HAL\BTN1" />
     <Folder Include="HAL\BTN2" />
     <Folder Include="HAL\LCD" />
+    <Folder Include="HAL\Relay" />
     <Folder Include="MCAL" />
     <Folder Include="MCAL\Interrupt" />
     <Folder Include="MCAL\DIO" />
     <Folder Include="MCAL\ADC" />
+    <Folder Include="MCAL\EEPROM" />
+    <Folder Include="MCAL\Timer2" />
     <Folder Include="MCAL\Timer1" />
     <Folder Include="MCAL\TWI" />
     <Folder Include="MCAL\Timer0" />

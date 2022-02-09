@@ -15,6 +15,8 @@
 #include "DIO.h"
 #include "Timer0.h"
 #include "Timer1.h"
+#include "Timer2.h"
+#include "EEPROM.h"
 
 #include "TWI.h"
 //Modules
