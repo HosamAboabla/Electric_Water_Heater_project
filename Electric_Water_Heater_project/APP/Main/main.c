@@ -269,10 +269,7 @@ ISR(TIMER2_OVF_vect)
 		{
 			temp_index = 0;
 			current_temp=calcualate_avg_temp(last_10_temp);
-			if (heat_flag==1)
-			{
-				LED1_TGL();
-			}
+			
 			blink_7_segment ^= 1;
 		}
 		timer2_count = 0;
