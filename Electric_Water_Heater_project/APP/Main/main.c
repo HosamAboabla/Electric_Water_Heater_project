@@ -52,7 +52,6 @@ int main(void)
 	Timer2_Start(PreS_1024_);	//start timer2 to get the ADC read every 100 ms
 	Timer2_WithInterrupt_SetDelay(Normal_Mode_ , 100 , 255);
 
-	SET_BIT(DDRA , PIN3);
 	
 	/* Replace with your application code */
 	while (1)
@@ -60,15 +59,7 @@ int main(void)
 		btn1_read_ = BTN1_Read();	//get button1 read
 		btn0_read_ =BTN0_Read();	//get button0 read
 		
-		if(btn0_read_)
-		{
-			SET_BIT(PORTA , PIN3);
-		}
-		else
-		{
-			CLR_BIT(PORTA , PIN3);
-		}
-		
+
 		//check if the device is on or off
 		if (power_flag==0);	//if off do noting
 		else{	//if on start operations
@@ -120,14 +111,15 @@ int main(void)
 				SET_BIT(PORTA , PIN3);
 			}
 			
-			/*
+			
 			if (first_push_flag==0)
 			{
-				LCD_Clear();
-				LCD_Write_Number(current_temp);
-				//SEVSEG_Display(current_temp);
+				// LCD_Clear();
+				// LCD_Write_Number(current_temp);
+				SEVSEG_Display(current_temp);
 			}
-			*/
+			
+			
 			
 		}
 		
@@ -257,11 +249,12 @@ ISR(TIMER2_OVF_vect)
 		}
 		
 	}
+	/*
 	else
 	{
 		SEVSEG_Display(current_temp);
 	}
-	
+	*/
 	if(timer2_count < Timer2_OVF)
 	{
 		timer2_count++;
