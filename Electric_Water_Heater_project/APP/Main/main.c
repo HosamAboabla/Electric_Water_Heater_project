@@ -86,7 +86,16 @@ int main(void)
 			
 			//compare the current temp with set_temp
 			
-			if(current_temp<degree-5){
+			if (current_temp >= degree - 5 && current_temp <= degree + 5)
+			{
+				LED1_OFF(); // Heating element off
+				LED2_OFF(); // Cooling element off
+				heat_flag=0;	//raise flag of heating element
+				Relay_ON();
+				_delay_ms(10);
+				Relay_OFF();
+			}
+			else if(current_temp<degree-5){
 				heat_flag=1;	//raise flag of heating element
 				LED1_ON(); // Heating element on
 				LED2_OFF(); // Cooling element off
@@ -96,15 +105,6 @@ int main(void)
 				heat_flag=0;	//raise flag of heating element
 				LED1_OFF(); // Heating element off
 				LED2_ON(); // Cooling element on
-			}
-			else if (current_temp <=degree - 5 && current_temp >= degree + 5)
-			{
-				LED1_OFF(); // Heating element off
-				LED2_OFF(); // Cooling element off
-				heat_flag=0;	//raise flag of heating element
-				Relay_ON();
-				_delay_ms(10);
-				Relay_OFF();
 			}
 			
 			
