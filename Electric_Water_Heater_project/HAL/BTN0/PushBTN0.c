@@ -12,6 +12,7 @@
 void BTN0_Initialization(void)
 {
 	DIO_SetPinDirection(BTN0_PORT, BTN0_PIN, BTN0_INP);
+	DIO_SetPinPullUp(BTN0_PORT , BTN0_PIN);
 }
 
 uint8_t BTN0_Read(void)
