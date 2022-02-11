@@ -106,10 +106,6 @@ int main(void)
 				_delay_ms(10);
 				Relay_OFF();
 			}
-			else
-			{
-				SET_BIT(PORTA , PIN3);
-			}
 			
 			
 			if (first_push_flag==0)
