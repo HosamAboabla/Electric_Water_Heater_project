@@ -82,6 +82,7 @@ int main(void)
 				first_push_flag=1;	//raise the flag
 				Timer0_Start(PreS_1024);	//start timer0 so that if 5 seconds spend without using buttons ,exit setting mode
 				Timer0_WithInterrupt_SetDelay(Normal_Mode,5000,255);
+				blink_7_segment = 1;
 				//reset buttons read
 				// btn1_read_=0;
 				// btn0_read_=0;
