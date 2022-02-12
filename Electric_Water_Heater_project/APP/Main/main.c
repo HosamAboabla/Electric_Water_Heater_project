@@ -105,14 +105,14 @@ int main(void)
 
 			}
 			else if(current_temp<degree-5){
-				//heat_flag=1;	//raise flag of heating element
+				heat_flag=1;	//raise flag of heating element
 				relay_flag=0;
-				LED1_ON(); // Heating element on
+				//LED1_ON(); // Heating element on
 				LED2_OFF(); // Cooling element off
 			}
 			else if (current_temp>degree+5)
 			{
-				//heat_flag=0;	//raise flag of heating element
+				heat_flag=0;	//raise flag of heating element
 				relay_flag=0;
 				LED1_OFF(); // Heating element off
 				LED2_ON(); // Cooling element on
@@ -275,6 +275,10 @@ ISR(TIMER2_OVF_vect)
 		{
 			temp_index = 0;
 			current_temp=calcualate_avg_temp(last_10_temp);
+			if (heat_flag==1)
+			{
+				LED1_TGL();
+			}
 
 
 		}

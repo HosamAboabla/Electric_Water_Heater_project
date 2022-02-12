@@ -46,7 +46,7 @@ void Timer0_Stop(void)
 
 void Timer0_WithoutInterrupt_Initialization(Timer0_Mode mode, Timer0_Pin_Mode pin)
 {
-	cli();//Close global interrupt
+	
 	switch(mode)//Chose Mode
 	{
 		case Normal_Mode:

@@ -51,9 +51,9 @@ void SEVSEG_Display(uint8_t number)
 	PORTA = (num1 << 4);
 	SEVSEG_Enable1();
 	SEVSEG_Disable2();
-	_delay_ms(10);
+	_delay_ms(1);
 	PORTA = (num2 << 4);
 	SEVSEG_Disable1();
 	SEVSEG_Enable2();
-	_delay_ms(10);
+
 }

@@ -34,7 +34,7 @@ void Timer2_Start(Timer2_Prescaler prescaler)
 		break;
 		case PreS_1024_:
 		_Prescaler_ = 1024;
-		SET_BIT(TCCR2, CS22);CLR_BIT(TCCR2, CS21);SET_BIT(TCCR2, CS20);
+		SET_BIT(TCCR2, CS22);SET_BIT(TCCR2, CS21);SET_BIT(TCCR2, CS20);
 		break;
 		
 	}
@@ -122,7 +122,7 @@ uint32_t Timer2_Init_Value = 0;
 
 void Timer2_WithInterrupt_Initialization(Timer2_Mode mode, Timer2_Pin_Mode pin)
 {
-	cli();//Close global interrupt
+	
 	switch(mode)//Chose Mode
 	{
 		case Normal_Mode_:
