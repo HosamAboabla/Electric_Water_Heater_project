@@ -20,12 +20,13 @@ uint16_t last_10_temp[10] = {0,0,0,0,0,0,0,0,0,0};
 uint8_t temp_index = 0;
 extern uint32_t Timer2_OVF;
 uint8_t blink_7_segment = 0;
+uint8_t relay_flag=0;
 // extern uint32_t TIMER1_OVF;
 
 
 void sitting_temp(uint8_t,uint8_t);
 float calcualate_avg_temp(uint16_t* arr);
-void cmpare_temp(void);
+
 
 int main(void)
 {
@@ -49,8 +50,8 @@ int main(void)
 	LED2_Initialization();
 	Relay_Initialization();
 	
-	Timer2_Start(PreS_1024_);	//start timer2 to get the ADC read every 100 ms
-	Timer2_WithInterrupt_SetDelay(Normal_Mode_ , 100 , 255);
+	//Timer2_Start(PreS_1024_);	//start timer2 to get the ADC read every 100 ms
+	//Timer2_WithInterrupt_SetDelay(Normal_Mode_ , 100 , 255);
 
 	
 	/* Replace with your application code */
@@ -67,23 +68,26 @@ int main(void)
 			{
 				degree=EEPROM_Read(degree_addr);
 			}
-			
+			Timer2_Start(PreS_1024_);	//start timer2 to get the ADC read every 100 ms
+			Timer2_WithInterrupt_SetDelay(Normal_Mode_ , 100 , 255);
 
 			if((first_push_flag==0&&btn0_read_==PRESSED)||(first_push_flag==0&&btn1_read_==PRESSED)){	//check if buttons are clicked for the first time to enter setting mode
 				first_push_flag=1;	//raise the flag
+				blink_7_segment = 1;
 				Timer0_Start(PreS_1024);	//start timer0 so that if 5 seconds spend without using buttons ,exit setting mode
 				Timer0_WithInterrupt_SetDelay(Normal_Mode,5000,255);
-				blink_7_segment = 1;
+				
 				//reset buttons read
 				// btn1_read_=0;
 				// btn0_read_=0;
 			}
-			else//  if( (btn0_read_==PRESSED) ||(btn1_read_==PRESSED) ) 
+			else
 			{	//if this isn't the first click call the function of setting mode
-				sitting_temp(btn0_read_,btn1_read_);
-				
+				if( (btn0_read_==PRESSED) ||(btn1_read_==PRESSED) ){
+					sitting_temp(btn0_read_,btn1_read_);
+					
+				}
 			}
-			
 			//compare the current temp with set_temp
 			
 			if (current_temp >= degree - 5 && current_temp <= degree + 5)
@@ -91,18 +95,25 @@ int main(void)
 				LED1_OFF(); // Heating element off
 				LED2_OFF(); // Cooling element off
 				heat_flag=0;	//raise flag of heating element
-				Relay_ON();
-				_delay_ms(10);
-				Relay_OFF();
+				if (relay_flag==0)
+				{
+					Relay_ON();
+					_delay_ms(10);
+					Relay_OFF();
+					relay_flag=1;
+				}
+
 			}
 			else if(current_temp<degree-5){
-				heat_flag=1;	//raise flag of heating element
+				//heat_flag=1;	//raise flag of heating element
+				relay_flag=0;
 				LED1_ON(); // Heating element on
 				LED2_OFF(); // Cooling element off
 			}
 			else if (current_temp>degree+5)
 			{
-				heat_flag=0;	//raise flag of heating element
+				//heat_flag=0;	//raise flag of heating element
+				relay_flag=0;
 				LED1_OFF(); // Heating element off
 				LED2_ON(); // Cooling element on
 			}
@@ -114,9 +125,6 @@ int main(void)
 				// LCD_Write_Number(current_temp);
 				SEVSEG_Display(current_temp);
 			}
-			
-			
-			
 		}
 		
 	}
@@ -136,18 +144,17 @@ ISR(INT0_vect){
 		Timer0_Stop();
 		Timer2_Stop();
 		first_push_flag=0;
-		//SEVSEG_Disable1();
-		//SEVSEG_Disable2();
-		//SEVSEG_Dot_Disable();
-		LCD_disable();
+		SEVSEG_Disable1();
+		SEVSEG_Disable2();
+		SEVSEG_Dot_Disable();
+		//LCD_disable();
 	}
 	else {
 		LED0_ON();
-		//SEVSEG_Initialization();
-		LCD_Initialization();
+		SEVSEG_Initialization();
+		//LCD_Initialization();
 		test=1;	//to reset the counter
-		Timer2_Start(PreS_1024_);	//start timer2 to get the ADC read every 100 ms
-		Timer2_WithInterrupt_SetDelay(Normal_Mode_ , 100 , 255);
+
 	}
 }
 
@@ -209,18 +216,34 @@ ISR(TIMER0_OVF_vect){
 	if(test==1){	//restart count from 0 if user press the buttons
 		cnt=0;
 		test=0;
+		blink_7_segment=1;
 	}
+	if( blink_7_segment )
+	{
+		SEVSEG_Initialization();
+		SEVSEG_Display(degree);
+	}
+	else
+	{
+		SEVSEG_Disable1();
+		SEVSEG_Disable2();
+	}
+
 	if(cnt==Number_OVF){		//if counter reach number of overflows
+		SEVSEG_Initialization();
 		Timer0_Stop();			//stop the timer
 		first_push_flag=0;
+		blink_7_segment=0;
 		cnt=0;					//make  counter =0
 	}
-	/*
+	
 	else if(cnt%(Number_OVF/5)==0){
-		LCD_Write_Number(degree);
+		//LCD_Write_Number(degree);
 		//SEVSEG_Display(degree);
+		blink_7_segment ^= 1;
+
 	}
-	*/
+	
 	cnt++;
 }
 
@@ -231,24 +254,11 @@ ISR(TIMER0_OVF_vect){
 ISR(TIMER2_OVF_vect)
 {
 	static uint32_t timer2_count = 0;
-	
-	if (first_push_flag == 1)
-	{
-		if( blink_7_segment )
-		{
-			SEVSEG_Display(degree);
-		}
-		else
-		{
-			SEVSEG_Disable1();
-			SEVSEG_Disable2();
-		}
-		
-	}
+
 	/*
 	else
 	{
-		SEVSEG_Display(current_temp);
+	SEVSEG_Display(current_temp);
 	}
 	*/
 	if(timer2_count < Timer2_OVF)
@@ -265,8 +275,8 @@ ISR(TIMER2_OVF_vect)
 		{
 			temp_index = 0;
 			current_temp=calcualate_avg_temp(last_10_temp);
-			
-			blink_7_segment ^= 1;
+
+
 		}
 		timer2_count = 0;
 
